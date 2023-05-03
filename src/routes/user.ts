@@ -104,7 +104,14 @@ export async function usersRoutes(app: FastifyInstance): Promise<void> {
       const mealsOnDietByDayMap = new Map<string, number>()
 
       meals.forEach((meal) => {
-        if (!mealsOnDietByDayMap.has(meal.registered_at)) {
+        if (!meal.is_on_the_diet_plan) {
+          return
+        }
+
+        if (
+          meal.is_on_the_diet_plan &&
+          !mealsOnDietByDayMap.has(meal.registered_at)
+        ) {
           mealsOnDietByDayMap.set(meal.registered_at, 1)
 
           return
